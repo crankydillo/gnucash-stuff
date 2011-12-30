@@ -1,0 +1,52 @@
+@(title: String = "Expense"
+  , month: Int
+  , transactions: List[models.Transaction]
+  , curr: (Int) => String
+)
+
+<html>
+<head>
+  <title>@title</title>
+  <style type="text/css">
+    table {
+      border-collapse: collapse;
+    }
+    td {
+      border: 1px solid black;
+      padding: 3px 20px 3px 20px
+    }
+    td.expense {
+      border: 1px solid black;
+      text-align: right
+    }
+    #expenses th {
+      font-size: 1.1em;
+      border: 1px solid black;
+      padding: 6px 20px 6px 20px;
+      background-color: #ccc;
+      color: #000;
+    }
+    #expenses tr.alt td {
+      color: #000;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+<table id="expenses">
+  <tr>
+    <th>Description</th>
+    <th>Memo</th>
+    <th>Amount</th>
+  </tr>
+  @transactions.zipWithIndex.map {case (transaction, i) => 
+    <tr @if(i % 2 == 1) {class="alt"} else {""}>
+      <td>@transaction.desc</td>
+      <td>@transaction.memo</td>
+      <td align="right">@curr(transaction.amount)</td>
+    </tr>
+  }
+
+</body>
+</html>
